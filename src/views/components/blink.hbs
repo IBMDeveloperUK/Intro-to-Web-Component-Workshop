@@ -29,7 +29,6 @@
             super();
 
             const elementNode = this;
-            let visible = true;
 
             elementNode.attachShadow({mode: 'open'});
             elementNode.shadowRoot.appendChild(document.importNode(templateElement.content, true));
@@ -42,8 +41,6 @@
                 contentNode.dataset.visible = contentNode.dataset.visible === "false" ? "true" : "false";
 
             }, 500);
-
-            console.log(elementNode);
  
         }
 
