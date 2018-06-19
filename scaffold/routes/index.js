@@ -8,7 +8,7 @@ const availableComponents = fs.readdirSync(`${__dirname}/../views/components`).m
 		name,
 		path : `/component/${name}`
 	};
-});
+}).filter(component => component.name !== ".DS_Store");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
