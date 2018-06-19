@@ -10,3 +10,7 @@ body {
 a {
   color: #00B7FF;
 }
+
+#imageHolder img{
+  width: 300px;
+}

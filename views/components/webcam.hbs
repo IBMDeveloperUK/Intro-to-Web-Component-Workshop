@@ -1,0 +1,284 @@
+<h1>Webcam</h1>
+
+<component-webcam></component-webcam>
+
+<div id="imageHolder"></div>
+
+<template id="component-webcam-template">
+
+    <style>
+        :host {
+            all: initial;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            font-family: sans-serif;
+            overflow: hidden;
+            justify-content : center;
+            align-items: center;
+            min-height: 300px;
+        }
+
+        main[data-state="inactive"] #preview{
+            display: none;
+        }
+
+        main #activate, main #preview{
+            border: 1px solid #c7c7c7;
+        }
+        
+        main #activate{
+            width: 100%;
+            max-width: 300px;
+            height: 300px;
+            background: #d6d6d6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        main #activate p, main #previw p {
+            width: 100%;
+            text-align: center;
+            color: white;
+            background: #9c9c9c;
+            padding: 1em 0;
+            text-shadow: 0 1px 1px black;
+            font-weight: 400;
+        }
+
+        main[data-state="active"] #activate {
+            display: none;
+        }
+
+        main #preview{
+            display: flex;
+            align-items: center;
+            min-height: 300px;
+            background: #e8e7e7;
+            /* padding: 1em; */
+            box-sizing: border-box;
+            flex-direction: column;
+        }
+
+        main #preview video{
+            position: fixed;
+            left: 100%;
+            top: 100%;
+        }
+
+        main #preview canvas{
+            width: 300px;
+        }
+
+        main #preview .controls{
+            margin: 1em;
+            box-sizing: border-box;
+        }
+
+        main #preview button{
+            background: #3d70b2;
+            border: 1px solid transparent;
+            color: white;
+            padding: 1em;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+    </style>
+
+    <main data-state="inactive" data-type="still" data-capturing="false">
+
+        <div id="activate">
+            <p>click to use camera</p>
+        </div>
+
+        <div id="preview">
+
+            <canvas> </canvas>
+            <video autoplay playsinline muted> </video>
+
+            <div class="controls still">
+                <button id="captureStill">Take Picture</button>
+            </div>
+
+        </div>
+
+
+    </main>
+
+</template>
+
+<!-- User script for page -->
+<script>
+
+    const webcamElements = Array.from( document.body.querySelectorAll('component-webcam') );
+    const imageHolder = document.querySelector('#imageHolder');
+
+    webcamElements.forEach(element => {
+
+        element.addEventListener('imageavailable', function(e){
+
+            const img = new Image();
+
+            img.onload = function(){
+                imageHolder.appendChild(this);
+            }
+
+            img.src = e.detail;
+     
+        }, false);
+        
+    });
+
+    setTimeout(function(){
+        webcamElements[0].dispatchEvent( new CustomEvent('cheese') );
+    }, 5000);
+
+
+</script>
+
+<!-- Web Component Scripts-->
+<script>
+
+    (function(){
+        
+        const templateElement = document.body.querySelector('#component-webcam-template');
+
+        class Webcam extends HTMLElement {
+
+            constructor() {
+                super();
+
+                const domNode = this;
+
+                domNode.attachShadow({mode: 'open'});
+                domNode.shadowRoot.appendChild(document.importNode(templateElement.content, true));
+
+                const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+                let activated = false;
+
+                const main = domNode.shadowRoot.querySelector('main');
+                const activate = domNode.shadowRoot.querySelector('#activate');
+                const video = domNode.shadowRoot.querySelector('video');
+                const canvas = domNode.shadowRoot.querySelector('canvas');
+                const ctx = canvas.getContext('2d');
+
+                const stillControls = main.querySelector('.controls.still');
+                const stillCapture = stillControls.querySelector('#captureStill');
+
+                const captureType = 'still';
+
+                function drawVideoToCanvas(){
+                    ctx.drawImage(video, 0, 0);
+                    requestAnimationFrame(drawVideoToCanvas);
+                }
+
+                function captureImage(){
+
+                    const base64 = canvas.toDataURL('image/png');
+                    const imageData = base64.split(',')[1];
+
+                    dispatchEvent('imageavailable', base64);
+
+                }
+
+                function dispatchEvent(name, data){
+                    const event = new CustomEvent(name, {
+                        bubbles: true,
+                        detail: data,
+                        composed : true
+                    });
+
+                    domNode.dispatchEvent(event);
+                }
+
+                activate.addEventListener('click', function(){
+
+                    if(activated){
+                        return;
+                    } else {
+                        activated = true;
+                    }
+
+                    activate.querySelector('p').textContent = 'attempting to access camera';
+
+                    const constraints = {
+                        video : { facingMode: 'environment' },
+                        audio : false
+                    };
+
+                    navigator.mediaDevices.getUserMedia(constraints)
+                        .then(function(stream) {
+                            console.log(stream);
+
+                            const externalStream = stream.clone();
+
+                            video.addEventListener('canplay', function(){
+
+                                this.play();
+
+                                if(main.dataset.state === 'inactive'){
+                                    main.dataset.state = 'active';
+                                }
+
+                                canvas.width = video.offsetWidth;
+                                canvas.height = video.offsetHeight;
+
+                                dispatchEvent('streamavailable', externalStream);
+
+                            });
+
+                            try{
+                                const vidURL = window.URL.createObjectURL(stream);
+                                video.src = vidURL;
+                            } catch(err){
+
+                                console.log('err:', err);
+                                video.srcObject = stream;
+
+                                setTimeout(function(){
+                                    console.log('Video is playing', !video.paused);
+                                    if(video.paused){
+                                        video.play();
+                                    }
+                                }, 1000);
+
+                            }
+
+                            stillCapture.addEventListener('click', captureImage, false);
+
+                            drawVideoToCanvas();
+
+                        })
+                        .catch(function(err) {
+
+                            console.log(err);
+                            dispatchEvent('error', err);
+
+                        })
+                    ;
+
+                }, false);
+
+                this.addEventListener('cheese', function(){
+                    
+                    if(activated){
+                        captureImage();
+                    }
+
+                }, false);
+
+            }
+
+        }
+
+        window.customElements.define('component-webcam', Webcam);
+
+    }());
+
+</script>
