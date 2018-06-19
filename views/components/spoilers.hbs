@@ -1,0 +1,54 @@
+<h1>Spoilers</h1>
+
+<p>No, I don't have a landing permit. I'm trying to reach Lando Calrissian. Whoa! Wait a minute! Let me explain. You will not deviate from your present course. Rather touchy, aren't they? I thought you knew this person. Well, that was a long time ago. <component-spoiler>The Titanic sinks</component-spoiler>. I'm sure he's forgotten about that. Permission granted to land on Platform Three-two-seven. Thank you. There's nothing to worry about. We go way back, Lando and me. Who's worried?</p>
+
+<p>Oh, yes, that's very good. I like that. Oh! Something's not right because now I can't see. Wait. Wait! Oh, my! what have you done? I'm backwards, you stupid furball. Only an overgrown mophead like you would be stupid enough... I feel terrible. <component-spoiler>Darth Vadar is Luke's father</component-spoiler>. They never even asked me any questions. Lando. Get out of here, Lando! Shut up and listen! Vader has agreed to turn Leia and Chewie over to me. Over to you? They'll have to stay here, but at least they'll be safe. What about Han? Vader's giving him to the bounty hunter. Vader wants us all dead. He doesn't want you at all. He's after somebody called Skywalker.</p>
+
+<p>Boggarts lavender robes, Hermione Granger Fantastic Beasts and Where to Find Them. Bee in your bonnet Hand of Glory elder wand, spectacles House Cup Bertie Bott’s Every Flavor Beans Impedimenta. Stunning spells tap-dancing spider. <component-spoiler>Snape kills Dumbledore</component-spoiler>. Palominos scarlet train black robes, Metamorphimagus Niffler dead easy second bedroom. Padma and Parvati Sorting Hat Minister of Magic blue turban remember my last.</p>
+
+<script>
+
+    const templateString = `
+        <style>
+
+            span#content{
+                background: black;
+                color: black;
+                padding: 1px 2px;
+            }
+
+            span#content:hover{
+                color:white;
+                cursor: 
+            }
+
+        </style>
+        <span id="content"></span>
+    `;
+
+    const templateElement = document.createElement('template');
+    templateElement.innerHTML = templateString;
+
+    class Spoiler extends HTMLElement {
+
+        constructor() {
+            
+            super();
+
+            const elementNode = this;
+
+            elementNode.attachShadow({mode: 'open'});
+            elementNode.shadowRoot.appendChild(document.importNode(templateElement.content, true));
+
+            const contentNode = elementNode.shadowRoot.querySelector('#content');
+            contentNode.textContent = elementNode.textContent;
+
+            console.log(elementNode);
+ 
+        }
+
+    }
+    window.customElements.define('component-spoiler', Spoiler);
+
+
+</script>
