@@ -22,7 +22,7 @@
 
     const templateElement = document.body.querySelector('template#component-blink-template');
 
-    class Spoiler extends HTMLElement {
+    class Blink extends HTMLElement {
 
         constructor() {
             
@@ -39,8 +39,6 @@
 
             setInterval(function(){
 
-                //if(contentNode.dataset.visible === "false")
-                //debugger;
                 contentNode.dataset.visible = contentNode.dataset.visible === "false" ? "true" : "false";
 
             }, 500);
@@ -50,7 +48,7 @@
         }
 
     }
-    window.customElements.define('component-blink', Spoiler);
+    window.customElements.define('component-blink', Blink);
 
 
 </script>
