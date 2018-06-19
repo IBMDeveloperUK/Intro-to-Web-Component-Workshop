@@ -43,9 +43,9 @@ Though not strictly neccesary to have all of the above to follow the workshop, y
 ![The webpage displaying (currently none of) the available web components](images/first_run.png)
 There's no web components listed! Don't worry, that's because we haven't made any yet, but now we're ready to start putting together the code for our first web component - A modern version of the `<blink>` tag.
 
-### Creating the <component-blink> tag
+### Creating the `<component-blink>` tag
 
-If you arrived on the world wide web sometime after the year 2000, you may not have ever encountered the `<blink>` tag in the wild before. The result of a drunken conversation between two developer of the Lynx browser in the mid-90's the `<blink>` tag would make any amount of text that it surrounds _blink_. It sounds innocent enough, but when used heavily (as it was) web users grew to detest the tag and browser vendors moved to deprecate it towards the end of the noughties.
+If you arrived on the world wide web sometime after the year 2000, you may not have ever encountered the `<blink>` tag in the wild before. The result of a drunken conversation between two developer of the Lynx browser in the mid-90's, the `<blink>` tag would make any amount of text that it surrounds _blink_. It sounds innocent enough, but when used heavily (as it was) web users grew to detest the tag and browser vendors moved to deprecate it towards the end of the noughties.
 
 **_THAT SAID..._** because it's such a simple little bit of functionality to code (and the author of this document is a sucker for web nostalgia) it's the perfect candidate for the first web component that we'll code.
 
@@ -136,4 +136,4 @@ The `contentNode` line just gives us a convenient way to access the `<span>` ele
 
 9. Final step. Copy and paste `window.customElements.define('component-blink', Blink);` just after the `// SNIPPET TWO` line of code that we wrote back in step 6 (you didn't forget about _SNIPPET TWO_, did you?). This registers the `<component-blink>` tag with our browser, and lets the code the we've written execute for every instance of the `<component-blink>` tag on our page.
 
-10. Save the file, restart the server, and then head to `http://localhost:3000/component/blink` and see our new `<component-blink>` tag in all its blinky glory.
+10. Save the file, restart the server, and then head to `http://localhost:3000/component/blink` and see our new `<component-blink>` tag in all its blinky glory. You can also just head back to `http://localhost:3000/` and click on the "Blink" link in there too.
