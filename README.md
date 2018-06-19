@@ -10,10 +10,10 @@ By following this workshop, you will learn:
     3. The current compatability of web components with modern browsers, and...
         - How we can polyfill much of their functionality
     4. How the different technologies can interact with one another
-    5. How to build web component that:
-        A. Can emulate the classic <blink> tag
-        B. Can hide spoilers for stories in text
-        C. Can easily interface with a webcam
+    5. How to build web component that:✅
+        A. Can emulate the classic <blink> tag✅
+        B. Can hide spoilers for stories in text✅
+        C. Can easily interface with a webcam✅
     6. Which front-end frameworks can help you use Web Components today.
 
 ## Prerequisites
