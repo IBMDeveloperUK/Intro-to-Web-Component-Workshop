@@ -6,28 +6,28 @@
 
 <p>Boggarts lavender robes, Hermione Granger Fantastic Beasts and Where to Find Them. Bee in your bonnet Hand of Glory elder wand, spectacles House Cup Bertie Bott’s Every Flavor Beans Impedimenta. Stunning spells tap-dancing spider. <component-spoiler>Snape kills Dumbledore</component-spoiler>. Palominos scarlet train black robes, Metamorphimagus Niffler dead easy second bedroom. Padma and Parvati Sorting Hat Minister of Magic blue turban remember my last.</p>
 
+<template id="component-spoiler-template">
+    <style>
+
+        span#content{
+            background: black;
+            color: black;
+            padding: 1px 2px;
+        }
+
+        span#content:hover{
+            color:white;
+            cursor: 
+        }
+
+    </style>
+    <span id="content"></span>
+
+</template>
+
 <script>
 
-    const templateString = `
-        <style>
-
-            span#content{
-                background: black;
-                color: black;
-                padding: 1px 2px;
-            }
-
-            span#content:hover{
-                color:white;
-                cursor: 
-            }
-
-        </style>
-        <span id="content"></span>
-    `;
-
-    const templateElement = document.createElement('template');
-    templateElement.innerHTML = templateString;
+    const templateElement = document.body.querySelector('template#component-spoiler-template');
 
     class Spoiler extends HTMLElement {
 
