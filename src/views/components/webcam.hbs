@@ -171,8 +171,6 @@
                 const stillControls = main.querySelector('.controls.still');
                 const stillCapture = stillControls.querySelector('#captureStill');
 
-                const captureType = 'still';
-
                 function drawVideoToCanvas(){
                     ctx.drawImage(video, 0, 0);
                     requestAnimationFrame(drawVideoToCanvas);
