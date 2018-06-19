@@ -137,3 +137,95 @@ The `contentNode` line just gives us a convenient way to access the `<span>` ele
 9. Final step. Copy and paste `window.customElements.define('component-blink', Blink);` just after the `// SNIPPET TWO` line of code that we wrote back in step 6 (you didn't forget about _SNIPPET TWO_, did you?). This registers the `<component-blink>` tag with our browser, and lets the code the we've written execute for every instance of the `<component-blink>` tag on our page.
 
 10. Save the file, restart the server, and then head to `http://localhost:3000/component/blink` and see our new `<component-blink>` tag in all its blinky glory. You can also just head back to `http://localhost:3000/` and click on the "Blink" link in there too.
+
+### Creating the `<component-spoiler>` tag
+
+The author of this document absolutely adores going to the cinema, and he _hates_ seeing spoilers as he browses around the web. While he doesn't expect people to censor themselves online, it would be nice if certain key parts stories could be obscured in some standard way so that he doesn't get a nasty surprise, wouldn't it?
+
+Web components to the rescue! 🎉
+
+The next web component we'll make will black out any possible spoilers in a web page, but will reveal the content once hovered over by a mouse (or tapped by a finger). That way, content creators can still dicuss what they've seen, but those of us who are yet to see the latest epic won't run the risk of having things spoiled for us.
+
+Much the same as our `<component-blink>`, we're going to add some markup to our page, wrap some of that markup in our custom elements (in this case `<component-spoiler>`) and then write a little bit of code to make our element look and behave as we expect it.
+
+1. We need to create a new file to put our web component in. If you're still running commands in your CLI from the `/scaffold` path that we started in, you can do so by running `touch views/components/spoilers.hbs`. If you're somewhere else, just create a new file called `spoilers.hbs` in the same directory that we created `blink.hbs` in and open it for editing.
+
+2. Add a title and some content for to your page and wrap the spoilers in your `<component-spoiler>` element:
+
+```HTML
+<h1>Spoilers</h1>
+<p>The RMS Titanic sets sail for New York, <component-spoiler>and then subsequently sinks</component-spoiler>.</p>
+
+<p>Luke Skywalker engages in a battle with his father, <component-spoiler>who is then revealed to be his father</component-spoiler>.</p>
+
+<p>Harry Potter goes to a wizarding school, <component-spoiler>but after much too-ing-and-fro-ing, Snape kills Dumbledore</component-spoiler>.</p>
+```
+
+3. Copy and paste the following `<template>` node just after the markup you just added to the `spoiler.hbs` file.
+
+```HTML
+<template id="component-spoiler-template">
+    <style>
+
+        span#content{
+            background: black;
+            color: black;
+            padding: 1px 2px;
+        }
+
+        span#content:hover{
+            color:white;
+            cursor: 
+        }
+
+    </style>
+    <span id="content"></span>
+
+</template>
+<!--SNIPPET ZERO-->
+```
+
+The `<template>` node in this case is slightly different from the one that we created for the `<component-blink>` tag as it serves a different purpose, but the basic principle behind each is the same. It serves as a _template_ for styles and nodes that will make up the shadow DOM of our web component
+
+4. Just as with our `<component-blink>` tag, we're going to create a script element which contains the code that...
+    1. Creates a class the extends the `HTMLElement` class so we can get access to all those nice properties and methods that HTML elements already have.
+    2. Creates a shadow DOM for our soon to be registered element and attaches the shadow DOM to said element.
+    3. Adds the content of the `<template>` node to the shadow DOM of our custom element.
+    4. Assigns the content of the `<component-spoiler>` element to the `<div id="content">` node in our shadow DOM (so that we can easily access and modify it)
+    5. Register our new custom component so that the DOM knows what code to execute when it finds it.
+
+Copy and paste the following code on the line just after the `<!--SNIPPET ZERO-->` line from our previous code block:
+
+```HTML
+
+<script>
+
+    const templateElement = document.body.querySelector('template#component-spoiler-template');
+
+    class Spoiler extends HTMLElement {
+
+        constructor() {
+            
+            super();
+
+            const elementNode = this;
+
+            elementNode.attachShadow({mode: 'open'});
+            elementNode.shadowRoot.appendChild(document.importNode(templateElement.content, true));
+
+            const contentNode = elementNode.shadowRoot.querySelector('#content');
+            contentNode.textContent = elementNode.textContent;
+
+            console.log(elementNode);
+ 
+        }
+
+    }
+    window.customElements.define('component-spoiler', Spoiler);
+
+
+</script>
+
+```
+
+5. Save the `spoilers.hbs` file, restart the server, and then head to `http://localhost:3000/component/spoilers` to see our lovely spoiler tag in action.
