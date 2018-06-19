@@ -5,24 +5,24 @@ Details and demos for a ~90 minute workshop
 
 By following this workshop, you will learn:
 
-    1. What technologies make up a Web Component
-    2. How they can be used / are useful
-    3. The current compatability of web components with modern browsers, and...
-        - How we can polyfill much of their functionality
-    4. How the different technologies can interact with one another
-    5. How to build web component that:✅
-        A. Can emulate the classic <blink> tag✅
-        B. Can hide spoilers for stories in text✅
-        C. Can easily interface with a webcam✅
-    6. Which front-end frameworks can help you use Web Components today.
+1. What technologies make up a Web Component
+2. How they can be used / are useful
+3. The current compatability of web components with modern browsers, and...
+    - How we can polyfill much of their functionality
+4. How the different technologies can interact with one another
+5. How to build web component that:
+    A. Can emulate the classic <blink> tag ✅
+    B. Can hide spoilers for stories in text ✅
+    C. Can easily interface with a webcam ✅
+6. Which front-end frameworks can help you use Web Components today.
 
 ## Prerequisites
 
 To follow this workshop, you will need:
 
-    1. Node.js / npm installed `>= 7.0.0`
-    2. Your favourite IDE
-    3. A modern web browser (Chrome/Firefox/Safari/Samsung Internet)
+1. Node.js / npm installed `>= 7.0.0`
+2. Your favourite IDE
+3. A modern web browser (Chrome/Firefox/Safari/Samsung Internet)
 
 Though not strictly neccesary to have all of the above to follow the workshop, you will struggle to run the code examples without them.
 
