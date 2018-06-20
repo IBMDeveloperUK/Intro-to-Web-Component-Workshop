@@ -26,10 +26,6 @@ To follow this workshop, you will need:
 
 Though not strictly neccesary to have all of the above to follow the workshop, you will struggle to run the code examples without them.
 
-## So, what is a Web Component?
-
-// Answer this after working through all of the steps to build the web components.
-
 ## Getting started
 **NB**: _These following steps are for individuals running macOS/Linux systems. If you're running a Windows device, you may need to adjust some of the CLI commands to better suit your OS._
 
