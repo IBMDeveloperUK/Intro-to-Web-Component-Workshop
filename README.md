@@ -24,7 +24,7 @@ To follow this workshop, you will need:
 2. Your favourite IDE
 3. A modern web browser (Chrome/Firefox/Safari/Samsung Internet)
 
-Though not strictly neccesary to have all of the above to follow the workshop, you will struggle to run the code examples without them.
+Though not strictly necessary to have all of the above to follow the workshop, you will struggle to run the code examples without them.
 
 ## Getting started
 **NB**: _These following steps are for individuals running macOS/Linux systems. If you're running a Windows device, you may need to adjust some of the CLI commands to better suit your OS._
@@ -32,13 +32,13 @@ Though not strictly neccesary to have all of the above to follow the workshop, y
 ### Creating an Express.js server to run our code from
 
 1. Either clone or download this repo to your system `git clone git@github.com:seanmtracey/web-component-examples.git`
-2. Using your CLI (such as terminal, or iTerm) enter the newly downloaded repo with `cd web-components-examples/scaffold`. This is the directory that we'll be working from for the remainder of the workshop. It has all of the code that we'll need to deliver the web components that we'll be writing code for in the next little while. In essence, directory is a very simple Express.js web server that uses the Handlebars templating system to deliver the HTML/CSS/JavaScript that  we'll construct (including the required polyfills to help with cross-browser compatability).
+2. Using your CLI (such as terminal, or iTerm) enter the newly downloaded repo with `cd web-components-examples/scaffold`. This is the directory that we'll be working from for the remainder of the workshop. It has all of the code that we'll need to deliver the web components that we'll be writing code for in the next little while. In essence, directory is a very simple Express.js web server that uses the Handlebars templating system to deliver the HTML/CSS/JavaScript that  we'll construct (including the required polyfills to help with cross-browser compatibility).
 3. Install the dependencies for our Express.js server with `npm i`. This may take a few moments, depending on your speed of your internet connection.
-4. Create a new directory in the `views` folder called `components` (you can do this by running `mkdir views/components`). We're not going to put anything in it quite yet, but we need it to exist before we can run the server. 
+4. Create a new directory in the `views` folder called `components` (you can do this by running `mkdir views/components`). We're not going to put anything in it quite yet, but we need it to exist before we can run the server.
 4. Enter `DEBUG=* npm run start` to start the server. The `DEBUG=*` is an environment variable that Express.js uses to decide how verbose it should be in it's logging. In this case we're telling it to be as verbose as possible.
-5. After a bunch of text has scrolled by, you should see the message "Listening on port 3000". This means that your server has successfully installed all of its dependencies and started. You should now be able to access it in a browser by heading to `http://localhost:3000`. Once the page has loaded you should see something like the following: 
+5. After a bunch of text has scrolled by, you should see the message "Listening on port 3000". This means that your server has successfully installed all of its dependencies and started. You should now be able to access it in a browser by heading to `http://localhost:3000`. Once the page has loaded you should see something like the following:
 ![The webpage displaying (currently none of) the available web components](images/first_run.png)
-There's no web components listed! Don't worry, that's because we haven't made any yet, but now we're ready to start putting together the code for our first web component - A modern version of the `<blink>` tag.
+There are no web components listed! Don't worry, that's because we haven't made any yet, but now we're ready to start putting together the code for our first web component - A modern version of the `<blink>` tag.
 
 ### Creating the `<component-blink>` tag
 
@@ -50,7 +50,11 @@ First up, we need to create a file to put all of our code in. In the `views` fol
 
 1. Create a new file with the following command `touch views/components/blink.hbs` (a Handlebars template file) and then open `blink.hbs` for editing in _Your Favourite IDE™_
 2. Restart your Express.js server with `DEBUG=* npm run start` and reload the page at `http://localhost:3000`. You'll now see that "Blink" is a web component that we can view! You can click the link, but the page will be blank.
-3. Let's write some code! The very first thing we're going to enter in our `blink.hbs` file is `<h1><component-blink>Blink</component-blink></h1>`. When we've finished writing the code for this component, our header node will blink (which is only fitting, given that it's the _blink page_).
+3. Let's write some code! The very first thing we're going to enter in our `blink.hbs` file is
+```HTML
+<h1><component-blink>Blink</component-blink></h1>
+```
+When we've finished writing the code for this component, our header node will blink (which is only fitting, given that it's the _blink page_).
 4. If you like, you can add some random text/lipsum/meaningful words into the page which you could also wrap in `<component-blink>` tags. Whatever you wrap will blink when we're done, so do so at your own discretion.
 
 Once you've added all of the text and markup you want to blink it's time to add a `<template>` tag to our page. The `<template>` tag serves as a place to put the content that and styles that we want all of our web components of a certain type to contain. It only really exists to be cloned/copied/queried, and any text/HTML included within will not be rendered. Think of the `<template>` tag as an element which contains fragments of HTML that can be used for rendering elsewhere - like in the shadow DOM of a web component, which we'll get to shortly.
@@ -72,7 +76,7 @@ Once you've added all of the text and markup you want to blink it's time to add 
 
 ```
 
-Next, we're going to create a `<script>` tag. In here, we'll create a JavaScript class which will inherit all of the properties of a standard HTML element, and then we'll write JavaScript to augment how we want that node to look and behave. 
+Next, we're going to create a `<script>` tag. In here, we'll create a JavaScript class which will inherit all of the properties of a standard HTML element, and then we'll write JavaScript to augment how we want that node to look and behave.
 
 6. Copy and paste the following just after the line that reads `<!--SNIPPET ZERO-->` we created in the previous step.
 
@@ -85,11 +89,11 @@ Next, we're going to create a `<script>` tag. In here, we'll create a JavaScript
     class Blink extends HTMLElement {
 
         constructor() {
-            
+
             super();
 
             // SNIPPET ONE
-    
+
         }
 
     }
@@ -98,9 +102,9 @@ Next, we're going to create a `<script>` tag. In here, we'll create a JavaScript
 </script>
 
 ```
-We now how a JavaScript class which has all of the properties and functions that are available to HTML elements. This saves us a great deal of effort in duplicating commonly used function for interrogating and manipulating HTML elements. The calling of the `super()` in the `constructor` function.
+We now have a JavaScript class which has all of the properties and functions that are available to HTML elements. This saves us a great deal of effort in duplicating commonly used function for interrogating and manipulating HTML elements. The calling of the `super()` in the `constructor` function.
 
-Next up, we're going to add a Shadow DOM to our web component element, a shadow DOM is just like the regular DOM, except that it's scoped to the element that it's within, and in most circumstance isn't directly accessible from code outside of the component (although some global things like styles can bleed on through, and events can still be passed between elements, which we'll look at later).
+Next up, we're going to add a Shadow DOM to our web component element, a shadow DOM is just like the regular DOM, except that it's scoped to the element that it's within, and in most circumstances isn't directly accessible from code outside of the component (although some global things like styles can bleed on through, and events can still be passed between elements, which we'll look at later).
 
 7. Copy and paste the following JavaScript just after the `// SNIPPET ONE` line in the previous code.
 
@@ -129,9 +133,13 @@ setInterval(function(){
 
 }, 500);
 ```
-The `contentNode` line just gives us a convenient way to access the `<span>` element we defined in our template node, and that now lives in our elements shadow DOM. We set the content of the `<span>` tag to the text content that the `<component-blink>` tag is set to, and then every 500 seconds we check to see whether or not the tag is visible. If it's visible we make it invisible, and vice-versa.
+The `contentNode` line just gives us a convenient way to access the `<span>` element we defined in our template node, and that now lives in our elements shadow DOM. We set the content of the `<span>` tag to the text content that the `<component-blink>` tag is set to, and then every 500 milliseconds we check to see whether or not the tag is visible. If it's visible we make it invisible, and vice-versa.
 
-9. Final step. Copy and paste `window.customElements.define('component-blink', Blink);` just after the `// SNIPPET TWO` line of code that we wrote back in step 6 (you didn't forget about _SNIPPET TWO_, did you?). This registers the `<component-blink>` tag with our browser, and lets the code the we've written execute for every instance of the `<component-blink>` tag on our page.
+9. Final step. Copy and paste
+```JavaScript
+window.customElements.define('component-blink', Blink);
+```
+just after the `// SNIPPET TWO` line of code that we wrote back in step 6 (you didn't forget about _SNIPPET TWO_, did you?). This registers the `<component-blink>` tag with our browser, and lets the code the we've written execute for every instance of the `<component-blink>` tag on our page.
 
 10. Save the file, restart the server, and then head to `http://localhost:3000/component/blink` and see our new `<component-blink>` tag in all its blinky glory. You can also just head back to `http://localhost:3000/` and click on the "Blink" link in there too.
 
@@ -141,7 +149,7 @@ The author of this document absolutely adores going to the cinema, and he _hates
 
 Web components to the rescue! 🎉
 
-The next web component we'll make will black out any possible spoilers in a web page, but will reveal the content once hovered over by a mouse (or tapped by a finger). That way, content creators can still dicuss what they've seen, but those of us who are yet to see the latest epic won't run the risk of having things spoiled for us.
+The next web component we'll make will black out any possible spoilers in a web page, but will reveal the content once hovered over by a mouse (or tapped by a finger). That way, content creators can still discuss what they've seen, but those of us who are yet to see the latest epic won't run the risk of having things spoiled for us.
 
 Much the same as our `<component-blink>`, we're going to add some markup to our page, wrap some of that markup in our custom elements (in this case `<component-spoiler>`) and then write a little bit of code to make our element look and behave as we expect it.
 
@@ -172,7 +180,7 @@ Much the same as our `<component-blink>`, we're going to add some markup to our 
 
         span#content:hover{
             color:white;
-            cursor: 
+            cursor:
         }
 
     </style>
@@ -202,7 +210,7 @@ Copy and paste the following code on the line just after the `<!--SNIPPET ZERO--
     class Spoiler extends HTMLElement {
 
         constructor() {
-            
+
             super();
 
             const elementNode = this;
@@ -214,7 +222,7 @@ Copy and paste the following code on the line just after the `<!--SNIPPET ZERO--
             contentNode.textContent = elementNode.textContent;
 
             console.log(elementNode);
- 
+
         }
 
     }
@@ -235,7 +243,7 @@ That can sometimes mean writing a great deal of code once so that we never have 
 
 So far, the web-components we've put together have been simple example to demonstrate the techniques, technologies, and methodologies behind creating such things, but for our final component we're going to create a node that can interact with, and capture images with our web cam.
 
-Done well, this normally takes up a few hundred lines of code to ensure cross-browser compatability (and we're going to write most of that code in this next part of the tutorial, although we won't be examining the bits of the code that handle the webcam itself. We'll only focus on the bits of the code that interact with the web component technologies), but once the component is created, the most anybody should ever have to do is write `<component-webcam>` and a lovely, response, interact UI should appear that **_just gets the job done_**.
+Done well, this normally takes up a few hundred lines of code to ensure cross-browser compatibility (and we're going to write most of that code in this next part of the tutorial, although we won't be examining the bits of the code that handle the webcam itself. We'll only focus on the bits of the code that interact with the web component technologies), but once the component is created, the most anybody should ever have to do is write `<component-webcam>` and a lovely, response, interact UI should appear that **_just gets the job done_**.
 
 1. Just as with the previous components, we need to create a new file to put our web component in. Create a new file called `webcam.hbs` in the same directory that we created `blink.hbs` and `spoilers.hbs` in and open it for editing.
 
@@ -281,7 +289,7 @@ Done well, this normally takes up a few hundred lines of code to ensure cross-br
         main #activate, main #preview{
             border: 1px solid #c7c7c7;
         }
-        
+
         main #activate{
             width: 100%;
             max-width: 300px;
@@ -373,20 +381,20 @@ Done well, this normally takes up a few hundred lines of code to ensure cross-br
 <script>
 
     (function(){
-        
+
         const templateElement = document.body.querySelector('#component-webcam-template');
 
         class Webcam extends HTMLElement {
 
             constructor() {
-                
+
                 super();
 
                 const domNode = this;
 
                 domNode.attachShadow({mode: 'open'});
                 domNode.shadowRoot.appendChild(document.importNode(templateElement.content, true));
-                
+
                 // SNIPPET FOUR
 
 
@@ -402,9 +410,9 @@ Done well, this normally takes up a few hundred lines of code to ensure cross-br
 </script>
 ```
 
-Just as before, we're creating a reference to our `<template>` node so that when it comes to populating our shadow DOM, we have a nice easy referenc to work with. We've also created a shadow DOM and attached it to our `<component-webcam>` element, which we then populated with the content of our `<template>` node. We've also added the code to register our custom component with the DOM (the line the begins with `window.customElements`).
+Just as before, we're creating a reference to our `<template>` node so that when it comes to populating our shadow DOM, we have a nice easy reference to work with. We've also created a shadow DOM and attached it to our `<component-webcam>` element, which we then populated with the content of our `<template>` node. We've also added the code to register our custom component with the DOM (the line the begins with `window.customElements`).
 
-Now we're going to write some business logic for our web component. This has nothing to so with web components themselves, the code we're about to write (well, copy/paste) is just like the code that you'd normally write to interact with a webcam in a browser, except this time it's working with elements within the scope of the shadow DOM. The elements and code within will not interact with anything in the global scope _except_ thwe APIs that we'll be using to access the camera.
+Now we're going to write some business logic for our web component. This has nothing to so with web components themselves, the code we're about to write (well, copy/paste) is just like the code that you'd normally write to interact with a webcam in a browser, except this time it's working with elements within the scope of the shadow DOM. The elements and code within will not interact with anything in the global scope _except_ the APIs that we'll be using to access the camera.
 
 5. Copy and paste the following on the line just after `// SNIPPET FOUR`:
 
@@ -425,7 +433,7 @@ const stillCapture = stillControls.querySelector('#captureStill');
 
 ```
 
-6. Now we'll add the functions that our component will use to interact with the camera, and that will handled certain elements being clicked (the "activate" button, and the "capture image" button). Again, _none of the code has anything to do with web components_, it just handles how the elements contained within the web component look and behave.
+6. Now we'll add the functions that our component will use to interact with the camera, and that will handled certain elements being clicked (the "activate" button, and the "capture image" button). Again, _none of the code has anything to do with web components_, it just handles how the elements contained within the web component look and behave. Copy and paste the following on the line just after `// SNIPPET FIVE`:
 
 ```JavaScript
 function drawVideoToCanvas(){
@@ -516,7 +524,7 @@ activate.addEventListener('click', function(){
 }, false);
 
 this.addEventListener('cheese', function(){
-    
+
     if(activated){
         captureImage();
     }
@@ -536,7 +544,7 @@ _...but with your face, obviously_ 😜
 
 but you may have noticed something: pushing the "Take Picture" button doesn't do anything... or at least, it certainly seems like it isn't doing anything.
 
-Within the code of the web component there's a `dispatchEvent` function. This function enables the custom element to dispatch a custom event to anything listener, and in fact, it already does so when the "Take Picture" button is pressed. It emits an `imageavailable` event with captured image included. 
+Within the code of the web component there's a `dispatchEvent` function. This function enables the custom element to dispatch a custom event to anything listening, and in fact, it already does so when the "Take Picture" button is pressed. It emits an `imageavailable` event with captured image included.
 
 So, while we could have baked in some very specific functionality into our web component to maybe send the image off to a server, or save it to disc, the point of a web component is that it's _reusable_ as much as possible.
 
@@ -566,9 +574,9 @@ So, let's do something with the captured images!
             }
 
             img.src = e.detail;
-     
+
         }, false);
-        
+
     });
 
     setTimeout(function(){
