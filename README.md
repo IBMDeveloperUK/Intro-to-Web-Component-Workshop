@@ -172,7 +172,6 @@ Much the same as our `<component-blink>`, we're going to add some markup to our 
 
         span#content:hover{
             color:white;
-            cursor: 
         }
 
     </style>
