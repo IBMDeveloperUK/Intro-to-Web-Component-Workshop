@@ -153,7 +153,7 @@ Much the same as our `<component-blink>`, we're going to add some markup to our 
 <h1>Spoilers</h1>
 <p>The RMS Titanic sets sail for New York, <component-spoiler>and then subsequently sinks</component-spoiler>.</p>
 
-<p>Luke Skywalker engages in a battle with his father, <component-spoiler>who is then revealed to be his father</component-spoiler>.</p>
+<p>Luke Skywalker engages in a battle with Darth Vadar, <component-spoiler>who is then revealed to be his father</component-spoiler>.</p>
 
 <p>Harry Potter goes to a wizarding school, <component-spoiler>but after much too-ing-and-fro-ing, Snape kills Dumbledore</component-spoiler>.</p>
 ```
